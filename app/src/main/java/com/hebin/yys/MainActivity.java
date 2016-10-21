@@ -1,5 +1,6 @@
 package com.hebin.yys;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,12 +21,15 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView rvList;
     @InjectView(R.id.tv_total)
     TextView tvTotal;
+    @InjectView(R.id.tv_yuhu)
+    TextView tvYuhu;
 
     private List<DateEntity.ResultsEntity> list = new ArrayList<>();
 
     private String[] title = {"第一章 - 雀食奇谭", "第二章 - 座敷童子", "第三章 - 凤凰林的占卜师", "第四章 - 桥上的雨女", "第五章 - 黑夜山的食发鬼",
             "第六章 - 似梦非梦", "第七章 - 恋上鲤的美", "第八章 - 樱与桃", "第九章 - 兔蛙茶和锅", "第十章 - 鬼为谁买醉", "第十一章 - 染红的枫叶林",
-            "第十二章 - 另一个晴明", "第十三章 - 箭与弓道", "第十四章 - 梦境邂逅", "第十五章 - 阴界的裂缝", "第十六章 - 冥界审判", "第十七章 - 阴阳逆反", "第十八章 - 黑晴明"};
+            "第十二章 - 另一个晴明", "第十三章 - 箭与弓道", "第十四章 - 梦境邂逅", "第十五章 - 阴界的裂缝", "第十六章 - 冥界审判", "第十七章 - 阴阳逆反","第十八章 - 黑晴明",
+    "御魂副本第一层","御魂副本第二层","御魂副本第三层","御魂副本第四层","御魂副本第五层","御魂副本第六层","御魂副本第七层","御魂副本第八层","御魂副本第九层","御魂副本第十层"};
     private String[] info = {
             "天邪鬼绿1——天邪鬼绿x1、提灯小僧x2" + "\n\n" +
                     "天邪鬼绿2——天邪鬼绿x1、灯笼鬼x2\n\n" +
@@ -143,14 +147,58 @@ public class MainActivity extends AppCompatActivity {
                     "狸猫3——狸猫x1、觉醒火小怪x3、二回合-暗凤凰(?)x1\n\n" +
                     "首领：荒川之主——荒川之主x1、灯笼鬼x1、骨女x1、山兔x1",
 
-            "天邪鬼绿1：天邪鬼绿×1、提灯小僧×2" + "\n\n" +
-                    "天邪鬼绿2：天邪鬼绿×1、灯笼鬼×2\n\n" +
-                    "提灯小僧1：天邪鬼绿×2、提灯小僧×1\n\n" +
-                    "提灯小僧2：灯笼鬼×2、提灯小僧×1\n\n" +
-                    "首领：九命猫 -- 九命猫×3",
+
+            "九命猫123——九命猫x6" + "\n\n" +
+                    "三尾狐1——三尾狐x2、九命猫x2，二回合-大天狗\n\n" +
+                    "三尾狐23——三尾狐x2、九命猫x2\n\n" +
+                    "首领：大天狗——大天狗x1、鸦天狗x3",
+
+
+            "一回合：三尾狐x1、天邪鬼黄x1、天邪鬼青x1" + "\n\n" +
+                    "二回合：山童x1、涂壁x1、独眼小僧x1\n\n" +
+                    "三回合：八歧大蛇x1、天邪鬼赤x2",
+
+            "一回合：妖狐x1、鲤鱼精x1、河童x1" + "\n\n" +
+                    "二回合：吸血姬x1、萤草x1、兵俑x1\n\n" +
+                    "三回合：八歧大蛇x1、童女x2",
+
+            "一回合：桃花妖x1、蝴蝶精x1、青蛙瓷器x1" + "\n\n" +
+                    "二回合：海坊主x1、鲤鱼精x1、椒图x1\n\n" +
+                    "三回合：八歧大蛇x1、座敷童子x2",
+
+            "一回合：犬神x1、童男x1、童女x1" + "\n\n" +
+                    "二回合：大天狗x1、鬼使黑x1、鬼使白x1\n\n" +
+                    "三回合：八歧大蛇x1、食梦貘x2",
+
+            "一回合：镰鼬x1、骨女x1、丑时之女x1" + "\n\n" +
+                    "二回合：傀儡师x1、跳跳哥哥x1、独眼小僧x1\n\n" +
+                    "三回合：八歧大蛇x1、孟婆x2",
+
+            "一回合：雨女x1、孟婆x1、座敷童子x1" + "\n\n" +
+                    "二回合：阎魔x1、巫蛊师x1、鸦天狗x1\n\n" +
+                    "三回合：八歧大蛇x1、骨女x2",
+
+            "一回合：丑时之女x1、凤凰火x1、食发鬼x1" + "\n\n" +
+                    "二回合：山兔x1、酒吞童子x1、妖琴师x1\n\n" +
+                    "三回合：八歧大蛇x1、荒川之主x2",
+
+            "一回合：管狐x1、判官x1、饿鬼x1" + "\n\n" +
+                    "二回合：蝴蝶精x1、白狼x1、椒图x1\n\n" +
+                    "三回合：八歧大蛇x1、茨木童子x2",
+
+            "一回合：椒图x1、莹草x1、鲤鱼精x1" + "\n\n" +
+                    "二回合：狸猫x1、清姬x1、食梦貘x1\n\n" +
+                    "三回合：八歧大蛇x1、两面佛x2",
+
+            "一回合：二口女x1、觉x1、莹草x1" + "\n\n" +
+                    "二回合：椒图x1、青行灯x1、酒吞童子x1\n\n" +
+                    "三回合：八歧大蛇x1、大天狗x2",
+
+
     };
     private int[] img = {R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01,
             R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01,
+            R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01,
             R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01};
 
     @Override
@@ -172,10 +220,15 @@ public class MainActivity extends AppCompatActivity {
         rvList.setAdapter(adapter);
     }
 
-    @OnClick({R.id.tv_total})
+
+    @OnClick({R.id.tv_total, R.id.tv_yuhu})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_total:
+                startActivity(new Intent(this, TotalActivity.class));
+                break;
+            case R.id.tv_yuhu:
+                startActivity(new Intent(this, YuHunActivity.class));
                 break;
         }
     }

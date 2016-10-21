@@ -37,6 +37,16 @@
                 android:text="统计"
                 />
 
+            <TextView
+                android:id="@+id/tv_yuhu"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="#FFF"
+                android:textSize="16sp"
+                android:text="御魂"
+                />
+
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 

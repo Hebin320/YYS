@@ -15,7 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TotalActivity"></activity>
+        <activity android:name=".TotalActivity" />
+        <activity android:name=".YuHunActivity"></activity>
     </application>
 
 </manifest>

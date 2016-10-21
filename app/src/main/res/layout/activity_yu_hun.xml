@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#EEEEEE"
-    tools:context="com.hebin.yys.TotalActivity">
+    android:orientation="vertical"
+    tools:context="com.hebin.yys.YuHunActivity">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
@@ -30,17 +30,34 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="统计"
+                android:text="御魂掉落时间"
                 android:textColor="#FFF"
                 android:textSize="20sp" />
-        </RelativeLayout>
 
+        </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_list"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            android:background="#FFF"
+            android:padding="15dp"
+            android:text="@string/yuhun"
+            android:layout_marginBottom="40dp"
+            />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
