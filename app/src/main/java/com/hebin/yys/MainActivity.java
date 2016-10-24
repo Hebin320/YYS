@@ -2,6 +2,7 @@ package com.hebin.yys;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @InjectView(R.id.tb_title)
     Toolbar tbTitle;
     @InjectView(R.id.sv_main)
-    ScrollView svMain;
+    NestedScrollView svMain;
 
     private List<DateEntity.ResultsEntity> list = new ArrayList<>();
 
@@ -238,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
             resultsEntity.setImg(img[i]);
             list.add(resultsEntity);
         }
-        LinearLayoutManager manager = new LinearLayoutManager(this) {
+        LinearLayoutManager manager = new LinearLayoutManager(this){
             @Override
             public boolean canScrollVertically() {
                 return false;

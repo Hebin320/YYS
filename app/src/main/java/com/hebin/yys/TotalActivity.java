@@ -1,6 +1,7 @@
 package com.hebin.yys;
 
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,7 +52,7 @@ public class TotalActivity extends AppCompatActivity {
     @InjectView(R.id.tb_title)
     Toolbar tbTitle;
     @InjectView(R.id.sv_total)
-    ScrollView svTotal;
+    NestedScrollView svTotal;
 
     /**
      * 汉字转换成拼音的类
