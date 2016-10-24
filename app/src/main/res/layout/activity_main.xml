@@ -9,6 +9,7 @@
     tools:context="com.hebin.yys.MainActivity">
 
     <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_title"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
@@ -32,27 +33,67 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:gravity="center"
-                android:textColor="#FFF"
-                android:textSize="16sp"
                 android:text="统计"
-                />
+                android:textColor="#FFF"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_yuhu"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:textColor="#FFF"
-                android:textSize="16sp"
                 android:text="御魂"
-                />
+                android:textColor="#FFF"
+                android:textSize="16sp" />
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_list"
+    <ScrollView
+        android:id="@+id/sv_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        >
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="20dp"
+                    android:background="#FFF"
+                    android:drawableLeft="@mipmap/ic_search"
+                    android:drawablePadding="8dp"
+                    android:maxLines="1"
+                    android:paddingLeft="15dp" />
+
+                <ImageView
+                    android:id="@+id/iv_delete"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:scaleType="center"
+                    android:src="@mipmap/ic_et_delete"
+                    android:visibility="gone"
+                    />
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -26,6 +26,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         this.list = list;
     }
 
+    /**
+     * 当ListView数据发生变化时,调用此方法来更新ListView
+     * @param list
+     */
+    public void updateListView(List<DateEntity.ResultsEntity> list){
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_list, parent, false);
@@ -38,7 +47,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.tvTitle.setText(list.get(position).getName());
         holder.tvInfo.setText(list.get(position).getInfo());
         holder.ivMain.setImageResource(list.get(position).getImg());
-            holder.ivMain.setVisibility(View.GONE);
+        holder.ivMain.setVisibility(View.GONE);
     }
 
     @Override

@@ -5,8 +5,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.hebin.yys.search.CharacterParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +33,21 @@ public class MainActivity extends AppCompatActivity {
     TextView tvTotal;
     @InjectView(R.id.tv_yuhu)
     TextView tvYuhu;
+    @InjectView(R.id.iv_delete)
+    ImageView ivDelete;
+    @InjectView(R.id.et_search)
+    EditText etSearch;
+    @InjectView(R.id.tb_title)
+    Toolbar tbTitle;
+    @InjectView(R.id.sv_main)
+    ScrollView svMain;
 
     private List<DateEntity.ResultsEntity> list = new ArrayList<>();
 
     private String[] title = {"第一章 - 雀食奇谭", "第二章 - 座敷童子", "第三章 - 凤凰林的占卜师", "第四章 - 桥上的雨女", "第五章 - 黑夜山的食发鬼",
             "第六章 - 似梦非梦", "第七章 - 恋上鲤的美", "第八章 - 樱与桃", "第九章 - 兔蛙茶和锅", "第十章 - 鬼为谁买醉", "第十一章 - 染红的枫叶林",
-            "第十二章 - 另一个晴明", "第十三章 - 箭与弓道", "第十四章 - 梦境邂逅", "第十五章 - 阴界的裂缝", "第十六章 - 冥界审判", "第十七章 - 阴阳逆反","第十八章 - 黑晴明",
-    "御魂副本第一层","御魂副本第二层","御魂副本第三层","御魂副本第四层","御魂副本第五层","御魂副本第六层","御魂副本第七层","御魂副本第八层","御魂副本第九层","御魂副本第十层"};
+            "第十二章 - 另一个晴明", "第十三章 - 箭与弓道", "第十四章 - 梦境邂逅", "第十五章 - 阴界的裂缝", "第十六章 - 冥界审判", "第十七章 - 阴阳逆反", "第十八章 - 黑晴明",
+            "御魂副本第一层", "御魂副本第二层", "御魂副本第三层", "御魂副本第四层", "御魂副本第五层", "御魂副本第六层", "御魂副本第七层", "御魂副本第八层", "御魂副本第九层", "御魂副本第十层"};
     private String[] info = {
             "天邪鬼绿1——天邪鬼绿x1、提灯小僧x2" + "\n\n" +
                     "天邪鬼绿2——天邪鬼绿x1、灯笼鬼x2\n\n" +
@@ -201,6 +219,13 @@ public class MainActivity extends AppCompatActivity {
             R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01,
             R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01};
 
+
+    /**
+     * 汉字转换成拼音的类
+     */
+    private CharacterParser characterParser;
+    private RecyclerAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -213,15 +238,22 @@ public class MainActivity extends AppCompatActivity {
             resultsEntity.setImg(img[i]);
             list.add(resultsEntity);
         }
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+        LinearLayoutManager manager = new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rvList.setLayoutManager(manager);
-        RecyclerAdapter adapter = new RecyclerAdapter(this, list);
+        adapter = new RecyclerAdapter(this, list);
         rvList.setAdapter(adapter);
+        initViews();
+        setTitleClick();
     }
 
 
-    @OnClick({R.id.tv_total, R.id.tv_yuhu})
+    @OnClick({R.id.tv_total, R.id.tv_yuhu, R.id.iv_delete})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_total:
@@ -230,6 +262,88 @@ public class MainActivity extends AppCompatActivity {
             case R.id.tv_yuhu:
                 startActivity(new Intent(this, YuHunActivity.class));
                 break;
+            case R.id.iv_delete:
+                etSearch.setText("");
+                break;
         }
     }
+
+    private void initViews() {
+        //实例化汉字转拼音类
+        characterParser = CharacterParser.getInstance();
+        //根据输入框输入值的改变来过滤搜索
+        etSearch.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
+                filterData(s.toString());
+                if (s.toString().length()>0){
+                    ivDelete.setVisibility(View.VISIBLE);
+                }else {
+                    ivDelete.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 根据输入框中的值来过滤数据并更新ListView
+     *
+     * @param filterStr
+     */
+    private void filterData(String filterStr) {
+        List<DateEntity.ResultsEntity> filterDateList = new ArrayList<>();
+        if (TextUtils.isEmpty(filterStr)) {
+            filterDateList = list;
+        } else {
+            filterDateList.clear();
+            for (DateEntity.ResultsEntity sortModel : list) {
+                String name = sortModel.getName();
+                String info = sortModel.getInfo();
+                if (name.contains(filterStr) || characterParser.getSelling(name).startsWith(filterStr) || info.contains(filterStr) || characterParser.getSelling(info).startsWith(filterStr)) {
+                    filterDateList.add(sortModel);
+                }
+            }
+        }
+        adapter.updateListView(filterDateList);
+    }
+
+    int count = 0;
+    long firClick, secClick;
+
+    private void setTitleClick() {
+        tbTitle.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (MotionEvent.ACTION_DOWN == event.getAction()) {
+                    count++;
+                    if (count == 1) {
+                        firClick = System.currentTimeMillis();
+                    } else if (count == 2) {
+                        secClick = System.currentTimeMillis();
+                        if (secClick - firClick < 1000) {
+                            svMain.smoothScrollTo(0, 0);
+                        }
+                        count = 0;
+                        firClick = 0;
+                        secClick = 0;
+                    }
+                }
+                return true;
+            }
+        });
+    }
+
 }

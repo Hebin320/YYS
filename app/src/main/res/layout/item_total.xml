@@ -7,21 +7,23 @@
     <View
         android:id="@+id/view_top"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
-        />
+        android:layout_height="25dp" />
 
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="#FFF"
         android:gravity="center|left"
         android:lineSpacingExtra="10dp"
         android:lineSpacingMultiplier="1.3"
-        android:padding="8dp" />
+        android:paddingBottom="15dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="15dp" />
 
     <View
         android:id="@+id/view_bottom"
@@ -30,5 +32,10 @@
         android:layout_marginLeft="28dp"
         android:layout_marginRight="28dp"
         android:background="#b6b4b4" />
+
+    <View
+        android:id="@+id/view_hint"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
 </LinearLayout>

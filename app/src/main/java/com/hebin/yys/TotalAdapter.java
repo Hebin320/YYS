@@ -24,6 +24,15 @@ public class TotalAdapter extends RecyclerView.Adapter<TotalAdapter.ViewHolder> 
         this.list = list;
     }
 
+    /**
+     * 当ListView数据发生变化时,调用此方法来更新ListView
+     * @param list
+     */
+    public void updateListView(List<DateEntity.ResultsEntity> list){
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_total, parent, false);
@@ -41,8 +50,10 @@ public class TotalAdapter extends RecyclerView.Adapter<TotalAdapter.ViewHolder> 
         }
         if (position == list.size()-1){
             holder.viewBottom.setVisibility(View.GONE);
+            holder.viewHint.setVisibility(View.VISIBLE);
         }else {
             holder.viewBottom.setVisibility(View.VISIBLE);
+            holder.viewHint.setVisibility(View.GONE);
         }
     }
 
@@ -58,6 +69,8 @@ public class TotalAdapter extends RecyclerView.Adapter<TotalAdapter.ViewHolder> 
         View viewTop;
         @InjectView(R.id.view_bottom)
         View viewBottom;
+        @InjectView(R.id.view_hint)
+        View viewHint;
 
         ViewHolder(View view) {
             super(view);
