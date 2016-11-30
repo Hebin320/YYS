@@ -27,8 +27,13 @@ public class DateEntity {
 
         private String name;
         private String info;
-
         private int img;
+        /**
+         * link : link
+         */
+
+        private String link;
+
 
         public void setName(String name) {
             this.name = name;
@@ -52,6 +57,14 @@ public class DateEntity {
 
         public int getImg() {
             return img;
+        }
+
+        public void setLink(String link) {
+            this.link = link;
+        }
+
+        public String getLink() {
+            return link;
         }
     }
 }

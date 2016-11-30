@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -26,14 +28,10 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MyItemClickListener{
 
     @InjectView(R.id.rv_list)
     RecyclerView rvList;
-    @InjectView(R.id.tv_total)
-    TextView tvTotal;
-    @InjectView(R.id.tv_yuhu)
-    TextView tvYuhu;
     @InjectView(R.id.iv_delete)
     ImageView ivDelete;
     @InjectView(R.id.et_search)
@@ -48,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private String[] title = {"第一章 - 雀食奇谭", "第二章 - 座敷童子", "第三章 - 凤凰林的占卜师", "第四章 - 桥上的雨女", "第五章 - 黑夜山的食发鬼",
             "第六章 - 似梦非梦", "第七章 - 恋上鲤的美", "第八章 - 樱与桃", "第九章 - 兔蛙茶和锅", "第十章 - 鬼为谁买醉", "第十一章 - 染红的枫叶林",
             "第十二章 - 另一个晴明", "第十三章 - 箭与弓道", "第十四章 - 梦境邂逅", "第十五章 - 阴界的裂缝", "第十六章 - 冥界审判", "第十七章 - 阴阳逆反", "第十八章 - 黑晴明",
-            "御魂副本第一层", "御魂副本第二层", "御魂副本第三层", "御魂副本第四层", "御魂副本第五层", "御魂副本第六层", "御魂副本第七层", "御魂副本第八层", "御魂副本第九层", "御魂副本第十层"};
+            "御魂副本第一层", "御魂副本第二层", "御魂副本第三层", "御魂副本第四层", "御魂副本第五层", "御魂副本第六层", "御魂副本第七层", "御魂副本第八层", "御魂副本第九层", "御魂副本第十层",
+    "妖气封印 饿鬼","妖气封印 二口女","妖气封印 鬼使黑","妖气封印 骨女","妖气封印 海坊主","妖气封印 椒图","妖气封印 跳跳哥哥"};
     private String[] info = {
             "天邪鬼绿1——天邪鬼绿x1、提灯小僧x2" + "\n\n" +
                     "天邪鬼绿2——天邪鬼绿x1、灯笼鬼x2\n\n" +
@@ -214,11 +213,42 @@ public class MainActivity extends AppCompatActivity {
                     "三回合：八歧大蛇x1、大天狗x2",
 
 
+            "一回合：天邪鬼绿x3 涂壁" + "\n\n" +
+                    "二回合：天邪鬼绿x3 唐纸伞妖\n\n" +
+                    "三回合：提灯小童x3 饿鬼x3",
+
+
+            "一回合：天邪鬼青x3 帚神" + "\n\n" +
+                    "二回合：帚神x3 提灯小童x1\n\n" +
+                    "三回合：提灯小童x3 二口女x3",
+
+
+            "一回合：涂壁x3 天邪鬼赤" + "\n\n" +
+                    "二回合：帚神x3 涂壁x1\n\n" +
+                    "三回合：提灯小童x3 鬼使黑x3",
+
+
+            "一回合：帚神x4" + "\n\n" +
+                    "二回合：天邪鬼绿x3 天邪鬼赤x1\n\n" +
+                    "三回合：天邪鬼绿x3 骨女x3",
+
+
+            "一回合：天邪鬼黄x3 提灯小童x1" + "\n\n" +
+                    "二回合：天邪鬼赤x2 天邪鬼绿 天邪鬼青\n\n" +
+                    "三回合：提灯小童x3 海坊主x3",
+
+
+            "一回合：天邪鬼绿x3 天邪鬼黄x1" + "\n\n" +
+                    "二回合：天邪鬼绿x3 天邪鬼赤x1\n\n" +
+                    "三回合：天邪鬼绿x2 天邪鬼黄 椒图x3",
+
+
+            "一回合：天邪鬼绿x4" + "\n\n" +
+                    "二回合：帚神x2 天邪鬼赤 天邪鬼青\n\n" +
+                    "三回合：天邪鬼青x2 天邪鬼黄 跳跳哥哥x3",
+
+
     };
-    private int[] img = {R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01,
-            R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01,
-            R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01,
-            R.mipmap.ic_item_01, R.mipmap.ic_item_01, R.mipmap.ic_item_01};
 
 
     /**
@@ -232,11 +262,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+        setSupportActionBar(tbTitle);
         for (int i = 0; i < title.length; i++) {
             DateEntity.ResultsEntity resultsEntity = new DateEntity.ResultsEntity();
             resultsEntity.setName(title[i]);
             resultsEntity.setInfo(info[i]);
-            resultsEntity.setImg(img[i]);
             list.add(resultsEntity);
         }
         LinearLayoutManager manager = new LinearLayoutManager(this){
@@ -249,20 +279,47 @@ public class MainActivity extends AppCompatActivity {
         rvList.setLayoutManager(manager);
         adapter = new RecyclerAdapter(this, list);
         rvList.setAdapter(adapter);
+        adapter.setListener(this);
         initViews();
         setTitleClick();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
 
-    @OnClick({R.id.tv_total, R.id.tv_yuhu, R.id.iv_delete})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv_total:
-                startActivity(new Intent(this, TotalActivity.class));
-                break;
-            case R.id.tv_yuhu:
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_yuhun:
                 startActivity(new Intent(this, YuHunActivity.class));
                 break;
+            case R.id.menu_tongji:
+                startActivity(new Intent(this, TotalActivity.class));
+                break;
+            case R.id.menu_zhuanji:
+                startActivity(new Intent(this, ZhuanjiActivity.class));
+                break;
+            case R.id.menu_xiansuo:
+                startActivity(new Intent(this, XianSuo.class));
+                break;
+            case R.id.menu_manhua:
+                startActivity(new Intent(this, ManHuaActivity.class));
+                break;
+            case R.id.menu_tongrenshang:
+                startActivity(new Intent(this, TongRenShangActivity.class));
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick({ R.id.iv_delete})
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.iv_delete:
                 etSearch.setText("");
                 break;
@@ -347,4 +404,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onItemClick(View view, int postion) {
+
+    }
 }

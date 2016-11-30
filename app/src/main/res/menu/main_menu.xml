@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_yuhun"
+        android:orderInCategory="1"
+        android:title="御魂"
+        />
+
+    <item
+        android:id="@+id/menu_xiansuo"
+        android:orderInCategory="2"
+        android:title="线索"
+        />
+
+    <item
+        android:id="@+id/menu_zhuanji"
+        android:orderInCategory="3"
+        android:title="传记"
+        />
+
+    <item
+        android:id="@+id/menu_tongji"
+        android:orderInCategory="4"
+        android:title="统计"
+        />
+
+    <item
+        android:id="@+id/menu_manhua"
+        android:orderInCategory="5"
+        android:title="漫画"
+        />
+
+    <item
+        android:id="@+id/menu_tongrenshang"
+        android:orderInCategory="5"
+        android:title="同人赏"
+        />
+
+
+
+</menu>
