@@ -311,6 +311,9 @@ public class MainActivity extends AppCompatActivity implements MyItemClickListen
             case R.id.menu_tongrenshang:
                 startActivity(new Intent(this, TongRenShangActivity.class));
                 break;
+            case R.id.menu_gonglve:
+                startActivity(new Intent(this, GonglveActivity.class));
+                break;
             default:
                 break;
         }

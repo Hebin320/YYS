@@ -30,7 +30,8 @@
             android:name=".ZhuanjiActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ManHuaActivity" />
-        <activity android:name=".TongRenShangActivity"></activity>
+        <activity android:name=".TongRenShangActivity" />
+        <activity android:name=".GonglveActivity"></activity>
     </application>
 
 </manifest>
