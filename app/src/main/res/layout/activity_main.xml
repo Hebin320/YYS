@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#eeeeee"
     android:orientation="vertical"
-    tools:context="com.hebin.yys.MainActivity">
+    tools:context="com.hebin.yys.activity.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_title"

@@ -1,4 +1,4 @@
-package com.hebin.yys;
+package com.hebin.yys.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,8 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.hebin.yys.entity.DateEntity;
+import com.hebin.yys.help.MyItemClickListener;
+import com.hebin.yys.R;
+import com.hebin.yys.adapter.RecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +33,9 @@ public class TongRenShangActivity extends AppCompatActivity implements MyItemCli
 
 
     String[] info = {
+            "阴阳寮日常丨寮院观察日志·第一弹",
+            "阴阳寮日常丨冰上的晴明！和花滑势力一起跳《SEIMEI》",
+            "阴阳寮日常丨你，为什么还是单身？",
             "阴阳寮日常丨看粘土与式神碰撞出的火花",
             "阴阳寮日常丨扒一扒寮院里那些辣眼睛的事儿",
             "阴阳寮日常丨论攻略冰山少女的正确方式",
@@ -50,6 +59,9 @@ public class TongRenShangActivity extends AppCompatActivity implements MyItemCli
     };
 
     int[] image = {
+            R.mipmap.ic_trs_04,
+            R.mipmap.ic_trs_03,
+            R.mipmap.ic_trs_05,
             R.mipmap.ic_trs_01,
             R.mipmap.ic_trs_02,
             R.mipmap.ic_trs_03,
@@ -73,6 +85,9 @@ public class TongRenShangActivity extends AppCompatActivity implements MyItemCli
     };
 
     String[] link = {
+            "http://mp.weixin.qq.com/s/oB6ZqDyAZmTaf9xC17TP4g",
+            "http://mp.weixin.qq.com/s/SU--sT1i7pdRjZoPMTxKfQ",
+            "http://mp.weixin.qq.com/s/v0BG8bva4Oh7Zs0UJ3bLMQ",
             "http://mp.weixin.qq.com/s/BIwDHP3k8kAs51aJueLang",
             "http://mp.weixin.qq.com/s/JuwuM22MREBZRHA0XkGOwQ",
             "http://mp.weixin.qq.com/s/QRF9krhZFNAcIYBMIRWqvA",
@@ -115,6 +130,7 @@ public class TongRenShangActivity extends AppCompatActivity implements MyItemCli
         RecyclerAdapter adapter = new RecyclerAdapter(this, list);
         rvTongrenshang.setAdapter(adapter);
         adapter.setListener(this);
+        setTitleClick();
     }
 
     @OnClick({R.id.iv_back, R.id.rv_tongrenshang})
@@ -132,5 +148,31 @@ public class TongRenShangActivity extends AppCompatActivity implements MyItemCli
         intent.putExtra("link", link[postion]);
         intent.setClass(this, ManHuaActivity.class);
         startActivity(intent);
+    }
+
+    private  int count = 0;
+    private  long firClick, secClick;
+
+    public void setTitleClick() {
+        tbTitle.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (MotionEvent.ACTION_DOWN == event.getAction()) {
+                    count++;
+                    if (count == 1) {
+                        firClick = System.currentTimeMillis();
+                    } else if (count == 2) {
+                        secClick = System.currentTimeMillis();
+                        if (secClick - firClick < 1000) {
+                            rvTongrenshang.scrollTo(0,0);
+                        }
+                        count = 0;
+                        firClick = 0;
+                        secClick = 0;
+                    }
+                }
+                return true;
+            }
+        });
     }
 }

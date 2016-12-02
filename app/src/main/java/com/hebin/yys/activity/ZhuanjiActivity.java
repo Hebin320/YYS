@@ -1,4 +1,4 @@
-package com.hebin.yys;
+package com.hebin.yys.activity;
 
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
@@ -14,6 +14,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.hebin.yys.entity.DateEntity;
+import com.hebin.yys.help.MyItemClickListener;
+import com.hebin.yys.R;
+import com.hebin.yys.adapter.RecyclerAdapter;
 import com.hebin.yys.search.CharacterParser;
 
 import java.util.ArrayList;

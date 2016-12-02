@@ -1,4 +1,4 @@
-package com.hebin.yys;
+package com.hebin.yys.activity;
 
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
@@ -13,8 +13,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 
+import com.hebin.yys.entity.DateEntity;
+import com.hebin.yys.help.MyItemClickListener;
+import com.hebin.yys.R;
+import com.hebin.yys.adapter.RecyclerAdapter;
 import com.hebin.yys.search.CharacterParser;
 
 import java.util.ArrayList;
@@ -24,51 +27,80 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class TotalActivity extends AppCompatActivity {
+public class XianSuoActivity extends AppCompatActivity implements MyItemClickListener {
 
     @InjectView(R.id.iv_back)
     ImageView ivBack;
-    @InjectView(R.id.rv_list)
-    RecyclerView rvList;
+    @InjectView(R.id.tb_title)
+    Toolbar tbTitle;
     @InjectView(R.id.et_search)
     EditText etSearch;
     @InjectView(R.id.iv_delete)
     ImageView ivDelete;
+    @InjectView(R.id.rv_list)
+    RecyclerView rvList;
+    @InjectView(R.id.sv_main)
+    NestedScrollView svMain;
 
 
-    List<DateEntity.ResultsEntity> list = new ArrayList<>();
-    String[] strList = {"山童 - 第8、16章 、御魂1\n推荐：第十六章饿鬼有2只", "獨眼小僧 - 第11章、御魂1、5\n推荐：第11章武士之灵2有3只", "童女 - 第3、11、12章，御魂2、4\n推荐：第3章天邪鬼黄2有3只，第12章童女有3只",
-            "妖狐 - 第7章，御魂2\n推荐：御魂2层", "灯笼鬼 - 第1、2、3、5、6、7、9、13、17章\n推荐：第9章提灯小僧1有3只", "涂壁 - 第3、4、5、6、7、8、11、12、14章、御魂1\n推荐：第14章涂壁1、2各有6只",
-            "赤舌 - 第3、10、15、16章\n推荐：第3章赤舌1、2各1只", "天邪鬼赤 - 第4、5、6、7、13、14、15章、御魂1\n推荐：第4章唐纸伞妖1有3只", "天邪鬼黄 - 第3、5、12章\n推荐：第5章帚神2、管狐1各2只",
-            "天邪鬼青 - 第2、5、6、10、11章\n推荐：第10章，丑时之女1出2只", "天邪鬼绿 - 第1、2、5、6、8、13、15章\n推荐：第6章天邪鬼青有3只", "山兔 - 第9、13、16、17章\n推荐：第9章山兔1有3只，山兔2有4只",
-            "帚神 - 第2、3、4、5、6、7、8、9、12、14章\n推荐：第6、7、8、9章", "桃花妖 - 第8章、御魂3\n推荐：御魂3", "大天狗 - 第15、18章、御魂4、10\n推荐：御魂4",
-            "鲤鱼精 - 第7章、御魂2、3、9\n推荐：第7章", "三尾狐 - 第6、18章、御魂1\n推荐：第6章", "鬼使黑 - 妖气封印、第16章、御魂4\n推荐：御魂4", "座敷童子 - 第2、10章、御魂3/6\n推荐：御魂3、第10章",
-            "海坊主 - 第12章、妖气封印、御魂3\n推荐：御魂3、妖气封印", "傀儡师 - 第10章、御魂5\n推荐：第10章", "河童 - 第7章、御魂2\n推荐：御魂2、第7章",
-            "萤草 - 御魂2、9、10\n推荐：御魂2", "鸦天狗 - 第3、9、12、17、18章、御魂6\n推荐：第12章海坊主2、童男1、2各2只", "青蛙瓷器 - 第4章、御魂3\n推荐：御魂3",
-            "蝴蝶精 - 第6、8章、御魂3、8\n推荐：御魂3", "丑时之女 - 第10章、御魂5、7\n推荐：第10章", "跳跳犬 - 第1章困难、第7章、跳跳妹妹召唤\n推荐：第7章", "觉 - 第10、11章、御魂10\n推荐：第10章",
-            "寄生魂 - 第2、3、5、7、11、12、16章\n推荐：第11章武士之灵1有3只", "首无 - 第13章\n推荐：第13章", "盗墓小鬼 - 第2、12章\n推荐：第2、12章",
-            "狸猫 - 第10、17章、御魂9\n推荐：第10章觉1有3只", "铁鼠 - 第9章、金币妖怪\n推荐：金币妖怪", "唐纸伞妖 - 第4/8/13章\n推荐：第4/8/13章", "二口女 - 御魂10、妖气封印\n推荐：妖气封印",
-            "武士之灵 - 第11、12章\n推荐：第11章", "饿鬼 - 第9、11、13、16章、御魂8\n推荐：第11章饿鬼2有3只", "黑豹 - 第5章\n推荐：第5章", "食发鬼 -第5、10章、御魂7\n推荐：第10章首领有2只",};
+    private List<DateEntity.ResultsEntity> list = new ArrayList<>();
 
-    @InjectView(R.id.tb_title)
-    Toolbar tbTitle;
-    @InjectView(R.id.sv_total)
-    NestedScrollView svTotal;
+    private String[] info = {
+            "羽毛/笛子/扇\n\n大天狗\n\n第15/18章、御魂4/10",
+            "水池\n\n鲤鱼精\n\n第7章、御魂2/3/9",
+            "樱花树/红色\n\n三尾狐\n\n第6/18章、御魂1",
+            "单眼/石锤/怪力\n\n山童\n\n第8/16章、御魂1/7",
+            "黑镰/短刀\n\n鬼使黑\n\n妖气封印、第16章、御魂4",
+            "单眼/石菩萨、金刚经\n\n独眼小僧\n\n第11章、御魂1/5",
+            "鬼火/角 财富/幸运\n\n座敷童子\n\n第2章、御魂3/6",
+            "翅膀/羽衣/幼女\n\n童女\n\n第3/11/12章、御魂2/4",
+            "渔夫、海、胡须、杖\n\n海坊主\n\n第12章、妖气封印、御魂3",
+            "纸扇、书生、面具\n\n妖狐\n\n第7章、御魂2",
+            "鼓、单眼\n\n天邪鬼黄\n\n第3、5、12章",
+            "人偶、操纵\n\n傀儡师\n\n第10章、御魂5",
+            "锤子、钉耙、剑\n\n镰鼬\n\n御魂5，第18章式神挑战以及，式神副本",
+            "铃铛、噩梦\n\n食梦貘\n\n第14章、御魂4/9",
+            "青皮肤、风筝\n\n天邪鬼青\n\n第2/5/6/10/11章",
+            "石、青苔\n\n凃壁\n\n第4/14章、御魂1",
+            "水球、河流、荷叶\n\n河童\n\n第7章、御魂2",
+            "蒲公英、治疗\n\n萤草\n\n御魂2/9/10",
+            "杖妖艳/红尾\n\n三尾狐\n\n第6/18章、御魂1",
+            "雉刀、翅膀、面具\n\n鸦天狗\n\n第3/9/12/17/18章、御魂6",
+            "二筒、瓷、出千\n\n青蛙瓷器\n\n第4章、御魂3",
+            "手鼓、小妖精、可爱\n\n蝴蝶精\n\n第6/8章、御魂3/8",
+            "汤碗、琴、牙牙\n\n孟婆\n\n第9章、御魂5/6",
+            "剑雀、屋、守护\n\n犬神\n\n第10章、御魂4",
+            "贝壳、扇子、尾巴\n\n椒图\n\n妖气封印、御魂3/8/9/10",
+            "云、鬼面、冥界\n\n阎魔\n\n御魂6",
+            "大翅膀、风、扇\n\n大天狗\n\n第15/18章、御魂4/10",
+            "翅膀、雨衣、献祭\n\n童男\n\n第12章、御魂4",
+            "剑、坚甲、石化\n\n兵俑\n\n第3/10章、御魂2",
+            "稻草人、咒锥\n\n丑时之女\n\n第10章、御魂5/7",
+            "冥界、白、夺命\n\n鬼使白\n\n第16章、御魂4",
+            "红鬼、拍屁股\n\n天邪鬼赤\n\n第4/5/6/7/13/14/15章、御魂1",
+            "泪珠、雨、伞\n\n雨女\n\n第4章、御魂6",
+            "血、蝙蝠\n\n吸血姬\n\n御魂2层",
+            "蜡烛、棺材\n\n跳跳哥哥\n\n第10/12章、御魂5/10、妖气封印",
+            "水泡/尾巴\n\n鲤鱼精\n\n第7章、御魂2/3/9",
+    };
+
 
     /**
      * 汉字转换成拼音的类
      */
     private CharacterParser characterParser;
-    private TotalAdapter adapter;
+    private RecyclerAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_total);
+        setContentView(R.layout.activity_xian_suo);
         ButterKnife.inject(this);
-        for (int i = 0; i < strList.length; i++) {
+        setSupportActionBar(tbTitle);
+        for (int i = 0; i < info.length; i++) {
             DateEntity.ResultsEntity resultsEntity = new DateEntity.ResultsEntity();
-            resultsEntity.setName(strList[i]);
+            resultsEntity.setInfo(info[i]);
             list.add(resultsEntity);
         }
         LinearLayoutManager manager = new LinearLayoutManager(this) {
@@ -79,8 +111,9 @@ public class TotalActivity extends AppCompatActivity {
         };
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rvList.setLayoutManager(manager);
-        adapter = new TotalAdapter(this, list);
+        adapter = new RecyclerAdapter(this, list);
         rvList.setAdapter(adapter);
+        adapter.setListener(this);
         initViews();
         setTitleClick();
     }
@@ -97,6 +130,7 @@ public class TotalActivity extends AppCompatActivity {
         }
     }
 
+
     private void initViews() {
         //实例化汉字转拼音类
         characterParser = CharacterParser.getInstance();
@@ -105,13 +139,12 @@ public class TotalActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
             }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count,
                                           int after) {
+
             }
 
             @Override
@@ -140,8 +173,8 @@ public class TotalActivity extends AppCompatActivity {
         } else {
             filterDateList.clear();
             for (DateEntity.ResultsEntity sortModel : list) {
-                String name = sortModel.getName();
-                if (name.contains(filterStr) || characterParser.getSelling(name).startsWith(filterStr)) {
+                String info = sortModel.getInfo();
+                if (info.contains(filterStr) || characterParser.getSelling(info).startsWith(filterStr)) {
                     filterDateList.add(sortModel);
                 }
             }
@@ -163,7 +196,7 @@ public class TotalActivity extends AppCompatActivity {
                     } else if (count == 2) {
                         secClick = System.currentTimeMillis();
                         if (secClick - firClick < 1000) {
-                            svTotal.smoothScrollTo(0, 0);
+                            svMain.smoothScrollTo(0, 0);
                         }
                         count = 0;
                         firClick = 0;
@@ -175,4 +208,9 @@ public class TotalActivity extends AppCompatActivity {
         });
     }
 
+
+    @Override
+    public void onItemClick(View view, int postion) {
+
+    }
 }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#eee"
-    tools:context="com.hebin.yys.TongRenShangActivity">
+    tools:context="com.hebin.yys.activity.TongRenShangActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_title"
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="同人赏"
+                android:text="日常"
                 android:textColor="#FFF"
                 android:textSize="20sp" />
         </RelativeLayout>

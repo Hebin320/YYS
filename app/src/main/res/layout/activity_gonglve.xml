@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="com.hebin.yys.GonglveActivity">
+    tools:context="com.hebin.yys.activity.GonglveActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_title"

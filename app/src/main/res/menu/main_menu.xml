@@ -4,44 +4,39 @@
     <item
         android:id="@+id/menu_yuhun"
         android:orderInCategory="1"
-        android:title="御魂"
-        />
+        android:title="御魂" />
 
     <item
         android:id="@+id/menu_xiansuo"
         android:orderInCategory="2"
-        android:title="线索"
-        />
+        android:title="线索" />
 
     <item
         android:id="@+id/menu_zhuanji"
         android:orderInCategory="3"
-        android:title="传记"
-        />
+        android:title="传记" />
 
     <item
         android:id="@+id/menu_tongji"
         android:orderInCategory="4"
-        android:title="统计"
-        />
-
-    <item
-        android:id="@+id/menu_manhua"
-        android:orderInCategory="5"
-        android:title="漫画"
-        />
+        android:title="统计" />
 
     <item
         android:id="@+id/menu_tongrenshang"
         android:orderInCategory="5"
-        android:title="同人赏"
-        />
+        android:title="日常" />
     <item
         android:id="@+id/menu_gonglve"
-        android:orderInCategory="5"
-        android:title="天机谱"
-        />
-
+        android:orderInCategory="6"
+        android:title="天机谱" />
+    <item
+        android:id="@+id/menu_qidongtu"
+        android:orderInCategory="7"
+        android:title="启动图" />
+    <item
+        android:id="@+id/menu_manhua"
+        android:orderInCategory="8"
+        android:title="漫画" />
 
 
 </menu>

@@ -11,8 +11,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan">
+            android:name=".activity.MainActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".activity.TotalActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.YuHunActivity" />
+        <activity
+            android:name=".activity.XianSuoActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.ZhuanjiActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.ManHuaActivity" />
+        <activity android:name=".activity.TongRenShangActivity" />
+        <activity android:name=".activity.GonglveActivity" />
+        <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,18 +34,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TotalActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".YuHunActivity" />
-        <activity
-            android:name=".XianSuo"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ZhuanjiActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".ManHuaActivity" />
-        <activity android:name=".TongRenShangActivity" />
-        <activity android:name=".GonglveActivity"></activity>
+            android:name=".activity.QiDongTuActivity"
+            android:label="@string/title_activity_qi_dong_tu"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

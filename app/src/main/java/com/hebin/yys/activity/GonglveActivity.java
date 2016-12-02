@@ -1,4 +1,4 @@
-package com.hebin.yys;
+package com.hebin.yys.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,8 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.hebin.yys.entity.DateEntity;
+import com.hebin.yys.help.MyItemClickListener;
+import com.hebin.yys.R;
+import com.hebin.yys.adapter.RecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +99,7 @@ public class GonglveActivity extends AppCompatActivity implements MyItemClickLis
         RecyclerAdapter adapter = new RecyclerAdapter(this, list);
         rvGonglve.setAdapter(adapter);
         adapter.setListener(this);
+        setTitleClick();
     }
 
     @OnClick({R.id.iv_back})
@@ -110,5 +117,31 @@ public class GonglveActivity extends AppCompatActivity implements MyItemClickLis
         intent.putExtra("link", link[postion]);
         intent.setClass(this, ManHuaActivity.class);
         startActivity(intent);
+    }
+
+    private  int count = 0;
+    private  long firClick, secClick;
+
+    public void setTitleClick() {
+        tbTitle.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (MotionEvent.ACTION_DOWN == event.getAction()) {
+                    count++;
+                    if (count == 1) {
+                        firClick = System.currentTimeMillis();
+                    } else if (count == 2) {
+                        secClick = System.currentTimeMillis();
+                        if (secClick - firClick < 1000) {
+                            rvGonglve.scrollTo(0,0);
+                        }
+                        count = 0;
+                        firClick = 0;
+                        secClick = 0;
+                    }
+                }
+                return true;
+            }
+        });
     }
 }

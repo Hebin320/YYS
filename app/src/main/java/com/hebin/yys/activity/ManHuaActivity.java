@@ -1,4 +1,4 @@
-package com.hebin.yys;
+package com.hebin.yys.activity;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.hebin.yys.R;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;

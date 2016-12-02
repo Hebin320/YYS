@@ -1,4 +1,4 @@
-package com.hebin.yys;
+package com.hebin.yys.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,9 +16,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ScrollView;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import com.hebin.yys.entity.DateEntity;
+import com.hebin.yys.help.MyItemClickListener;
+import com.hebin.yys.R;
+import com.hebin.yys.adapter.RecyclerAdapter;
 import com.hebin.yys.search.CharacterParser;
 
 import java.util.ArrayList;
@@ -28,7 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements MyItemClickListener{
+public class MainActivity extends AppCompatActivity implements MyItemClickListener {
 
     @InjectView(R.id.rv_list)
     RecyclerView rvList;
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements MyItemClickListen
             "第六章 - 似梦非梦", "第七章 - 恋上鲤的美", "第八章 - 樱与桃", "第九章 - 兔蛙茶和锅", "第十章 - 鬼为谁买醉", "第十一章 - 染红的枫叶林",
             "第十二章 - 另一个晴明", "第十三章 - 箭与弓道", "第十四章 - 梦境邂逅", "第十五章 - 阴界的裂缝", "第十六章 - 冥界审判", "第十七章 - 阴阳逆反", "第十八章 - 黑晴明",
             "御魂副本第一层", "御魂副本第二层", "御魂副本第三层", "御魂副本第四层", "御魂副本第五层", "御魂副本第六层", "御魂副本第七层", "御魂副本第八层", "御魂副本第九层", "御魂副本第十层",
-    "妖气封印 饿鬼","妖气封印 二口女","妖气封印 鬼使黑","妖气封印 骨女","妖气封印 海坊主","妖气封印 椒图","妖气封印 跳跳哥哥"};
+            "妖气封印 饿鬼", "妖气封印 二口女", "妖气封印 鬼使黑", "妖气封印 骨女", "妖气封印 海坊主", "妖气封印 椒图", "妖气封印 跳跳哥哥"};
     private String[] info = {
             "天邪鬼绿1——天邪鬼绿x1、提灯小僧x2" + "\n\n" +
                     "天邪鬼绿2——天邪鬼绿x1、灯笼鬼x2\n\n" +
@@ -269,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements MyItemClickListen
             resultsEntity.setInfo(info[i]);
             list.add(resultsEntity);
         }
-        LinearLayoutManager manager = new LinearLayoutManager(this){
+        LinearLayoutManager manager = new LinearLayoutManager(this) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -286,13 +289,13 @@ public class MainActivity extends AppCompatActivity implements MyItemClickListen
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu,menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_yuhun:
                 startActivity(new Intent(this, YuHunActivity.class));
                 break;
@@ -303,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements MyItemClickListen
                 startActivity(new Intent(this, ZhuanjiActivity.class));
                 break;
             case R.id.menu_xiansuo:
-                startActivity(new Intent(this, XianSuo.class));
+                startActivity(new Intent(this, XianSuoActivity.class));
                 break;
             case R.id.menu_manhua:
                 startActivity(new Intent(this, ManHuaActivity.class));
@@ -314,13 +317,16 @@ public class MainActivity extends AppCompatActivity implements MyItemClickListen
             case R.id.menu_gonglve:
                 startActivity(new Intent(this, GonglveActivity.class));
                 break;
+            case R.id.menu_qidongtu:
+                startActivity(new Intent(this, QiDongTuActivity.class));
+                break;
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick({ R.id.iv_delete})
+    @OnClick({R.id.iv_delete})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_delete:
@@ -349,9 +355,9 @@ public class MainActivity extends AppCompatActivity implements MyItemClickListen
             public void afterTextChanged(Editable s) {
                 //当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
                 filterData(s.toString());
-                if (s.toString().length()>0){
+                if (s.toString().length() > 0) {
                     ivDelete.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     ivDelete.setVisibility(View.GONE);
                 }
             }
@@ -410,5 +416,17 @@ public class MainActivity extends AppCompatActivity implements MyItemClickListen
     @Override
     public void onItemClick(View view, int postion) {
 
+    }
+
+    private long exitTime = 0;
+
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(this, "再按一次退出程序~", Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            System.exit(1);
+        }
     }
 }
