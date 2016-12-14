@@ -28,7 +28,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_welcome);
         ButterKnife.inject(this);
-        int a = new Random().nextInt(25);
+        int a = new Random().nextInt(23);
         switch (a) {
             case 0:
                 ivMain.setImageResource(R.mipmap.ic_welcome_01);
@@ -96,12 +96,6 @@ public class WelcomeActivity extends AppCompatActivity {
             case 21:
                 ivMain.setImageResource(R.mipmap.ic_welcome_22);
                 break;
-            case 22:
-                ivMain.setImageResource(R.mipmap.ic_welcome_23);
-                break;
-            case 23:
-                ivMain.setImageResource(R.mipmap.ic_welcome_24);
-                break;
             default:
                 break;
         }
@@ -115,7 +109,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void setTime() {
-        countDownTimer = new CountDownTimer(5000, 1000) {
+        countDownTimer = new CountDownTimer(1500, 1000) {
             public void onTick(long millisUntilFinished) {
             }
             public void onFinish() {

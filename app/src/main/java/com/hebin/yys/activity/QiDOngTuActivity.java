@@ -49,8 +49,6 @@ public class QiDongTuActivity extends AppCompatActivity {
             R.mipmap.ic_welcome_20,
             R.mipmap.ic_welcome_21,
             R.mipmap.ic_welcome_22,
-            R.mipmap.ic_welcome_23,
-            R.mipmap.ic_welcome_24
     };
 
     @Override
